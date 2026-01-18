@@ -425,17 +425,20 @@ export default function ClubRankClient() {
           <p className="section-description">{activeSeasonTitle} season overview of member activity and points.</p>
         </div>
 
-        <div className="rank-tabs">
+                <div className="rank-tabs">
           <button
             type="button"
             className={`rank-tab ${activeTab === "dashboard" ? "rank-tab--active" : ""}`}
-            onClick={() =>Rules</button>
+            onClick={() => setActiveTab("dashboard")}
+          >
+            Dashboard
+          </button>
           <button
             type="button"
             className={`rank-tab ${activeTab === "rules" ? "rank-tab--active" : ""}`}
             onClick={() => setActiveTab("rules")}
           >
-            ???????
+            Rules
           </button>
         </div>
 

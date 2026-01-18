@@ -443,17 +443,10 @@ export default function ClubRankClient() {
         </div>
 
         {activeTab === "dashboard" && (
-          <div className="rank-grid">
-            <aside className="content-card animate">
-              <h2 className="feature-title">???</h2>
-              <p className="feature-description">Select a player to view point breakdown.</p>
-                  <div className="chart-box">
-                    <canvas ref={chartRef} />
-                  </div>
-                </div>
-              )}
-            </section>
-          </div>
+          <section className="content-card animate">
+            <h2 className="feature-title">Dashboard</h2>
+            <p className="feature-description">Select a player to view point breakdown.</p>
+          </section>
         )}
 
         {activeTab === "rules" && (

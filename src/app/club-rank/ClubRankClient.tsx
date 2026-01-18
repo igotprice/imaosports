@@ -410,7 +410,7 @@ export default function ClubRankClient() {
     );
   }
 
-  const activeSeasonTitle = season?.title || seasonId || "??";
+  const activeSeasonTitle = season?.title || seasonId || "Season";
   const matchWeight = getMatchWeight(season);
   const activityWeight = getActivityWeight(season);
 
@@ -420,20 +420,16 @@ export default function ClubRankClient() {
         <div className="section-header animate">
           <div className="section-badge">IMAO CLUB</div>
           <h1 className="section-title">
-            <span className="text-gradient">??????????/span>
+            <span className="text-gradient">IMAO Club Rank</span>
           </h1>
-          <p className="section-description">
-            {activeSeasonTitle} ?? ???? ?? ?????? ?????          </p>
+          <p className="section-description">{activeSeasonTitle} season overview of member activity and points.</p>
         </div>
 
         <div className="rank-tabs">
           <button
             type="button"
             className={`rank-tab ${activeTab === "dashboard" ? "rank-tab--active" : ""}`}
-            onClick={() => setActiveTab("dashboard")}
-          >
-            ???
-          </button>
+            onClick={() =>Rules</button>
           <button
             type="button"
             className={`rank-tab ${activeTab === "rules" ? "rank-tab--active" : ""}`}
@@ -447,58 +443,7 @@ export default function ClubRankClient() {
           <div className="rank-grid">
             <aside className="content-card animate">
               <h2 className="feature-title">???</h2>
-              <p className="feature-description">???????.</p>
-              <ul className="info-list">
-                <li>???: {stats.totalPlayers}</li>
-                <li>??? {stats.totalMatches}</li>
-                <li>????: {stats.totalActivities}</li>
-              </ul>
-            </aside>
-
-            <section className="content-card animate">
-              <div className="rank-header">
-                <div>
-                  <h2 className="feature-title">?????</h2>
-                  <p className="feature-description">
-                    ? ???????????????????????.
-                    <br />
-                    ?? = ?????{Math.round(matchWeight * 100)}%) + ???????{Math.round(activityWeight * 100)}%)
-                  </p>
-                </div>
-              </div>
-
-              <div className="table-wrapper">
-                <table className="rank-table">
-                  <thead>
-                    <tr>
-                      <th>??</th>
-                      <th>??/th>
-                      <th>???? ?????/th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {leaderboard.length === 0 && (
-                      <tr>
-                        <td colSpan={3}>?? ??? ????.</td>
-                      </tr>
-                    )}
-                    {leaderboard.map((row, idx) => (
-                      <tr key={row.playerUid || row.playerName} onClick={() => setSelected(row)}>
-                        <td>{idx + 1}</td>
-                        <td>{row.playerName}</td>
-                        <td>{row.totalPoints}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-
-              {selected && (
-                <div className="rank-chart animate">
-                  <h3 className="feature-title">
-                    {selected.playerName} ?????? (?{selected.totalPoints})
-                  </h3>
-                  <p className="feature-description">???????????????</p>
+              <p className="feature-description">Select a player to view point breakdown.</p>
                   <div className="chart-box">
                     <canvas ref={chartRef} />
                   </div>
@@ -510,88 +455,18 @@ export default function ClubRankClient() {
 
         {activeTab === "rules" && (
           <section className="content-card animate">
-            <h2 className="feature-title">???????(?)</h2>
-            <div className="features-grid">
-              <div className="feature-card animate">
-                <h3 className="feature-title">??????(?????)</h3>
-                <div className="feature-list">
-                  <p><strong>???????/strong></p>
-                  <ul className="info-list">
-                    <li>- ? 5??/li>
-                    <li>- ? 4??/li>
-                    <li>- 3??3??/li>
-                  </ul>
-                  <p><strong>??????/strong></p>
-                  <ul className="info-list">
-                    <li>???: 3 / 2 / 1 ??/li>
-                    <li>2??: ??? ???? 30%</li>
-                  </ul>
-                  <p className="feature-description">
-                    * ????????????? : ??????? ?? ???????????????30%??
-                    <br />
-                    (? ? ????? ????????[????]?????????)
-                  </p>
-                </div>
-                <div className="highlight-box">
-                  <h4 className="benefit-title">??? ??/h4>
-                  <ul className="benefit-list">
-                    <li><strong>??11????, ???? ?????/strong></li>
-                    <li>??????/li>
-                    <li>1??: ???????)</li>
-                    <li>2??: ?????/li>
-                    <li>3??: ????</li>
-                    <li>4??: ???? (? ?????????????</li>
-                    <li>???? ??????????????/li>
-                  </ul>
-                  <p className="feature-description">
-                    * ?? ?<br />
-                    ?? ?: ??? ?? 5?/ ???1? ?? ?(??????)
-                  </p>
-                </div>
-              </div>
-
-              <div className="feature-card animate">
-                <h3 className="feature-title">?? ?????(???/??</h3>
-                <div className="feature-list">
-                  <p><strong>????</strong></p>
-                  <ul className="info-list">
-                    <li>?????? 1??(???0.5??</li>
-                  </ul>
-                  <p><strong>???</strong></p>
-                  <ul className="info-list">
-                    <li>??????? ????2????? ???????3??/li>
-                    <li>?????? ????4????? ???2??/li>
-                  </ul>
-                  <p><strong>??? ??</strong></p>
-                  <ul className="info-list">
-                    <li>? ??? ?????3??????????? 2??/li>
-                    <li>?? ?2.5???????? ??5??/li>
-                  </ul>
-                  <p><strong>???????/strong></p>
-                  <ul className="info-list">
-                    <li>? ??? ???5??/li>
-                    <li>????? ?????? 3/2/1??/li>
-                    <li>????????????????: ?????2?/li>
-                    <li>?????MVP 5??/li>
-                  </ul>
-                  <p><strong>?/strong></p>
-                  <ul className="info-list">
-                    <li>??????3??-2?? ?????-3?? ???? -5????/li>
-                  </ul>
-                </div>
-                <p className="feature-description">
-                  ? ???? ? ? ??/??(?????? ??????
-                </p>
-              </div>
-            </div>
-
+            <h2 className="feature-title">Rules (Summary)</h2>
+            <p className="feature-description">
+              This tab summarizes scoring and ranking rules. Detailed rules can be
+              added back once content is confirmed.
+            </p>
             <p className="feature-description">
               <a
                 href="https://imaosports2025.cafe24.com/article/%EA%B3%B5%EC%A7%80%EC%82%AC%ED%95%AD/1/5/"
                 target="_blank"
                 rel="noreferrer"
               >
-                ???????
+                View full rules
               </a>
             </p>
           </section>

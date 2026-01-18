@@ -85,31 +85,31 @@ const normalize = (val?: string) =>
 
 const normalizeType = (val?: string) => {
   const v = normalize(val);
-  if (["국제", "국제대회", "international", "intl", "inter"].includes(v)) return "국제대회";
-  if (["국내", "국내대회", "domestic", "local"].includes(v)) return "국내대회";
+  if (["�?��", "�?��?�??, "international", "intl", "inter"].includes(v)) return "�?��?�??;
+  if (["�?��", "�?��?�??, "domestic", "local"].includes(v)) return "�?��?�??;
   return val ?? "";
 };
 
 const normalizeRank = (val?: string) => {
   const v = normalize(val);
-  if (["winner", "win", "champ", "우승", "1", "1위", "first"].includes(v)) return "winner";
-  if (["runnerup", "runner-up", "ru", "준우승", "2", "2위", "second"].includes(v)) return "runner-up";
-  if (["third", "3", "3위", "bronze", "동메달"].includes(v)) return "third";
-  if (["participation", "참가", "참여"].includes(v)) return "participation";
+  if (["winner", "win", "champ", "?�승", "1", "1??, "first"].includes(v)) return "winner";
+  if (["runnerup", "runner-up", "ru", "준?�승", "2", "2??, "second"].includes(v)) return "runner-up";
+  if (["third", "3", "3??, "bronze", "?�메??].includes(v)) return "third";
+  if (["participation", "참�?", "참여"].includes(v)) return "participation";
   return val ?? "";
 };
 
 const normalizeLeagueType = (val?: string) => {
   const v = normalize(val);
-  if (["open", "오픈", "오픈부", "open부"].includes(v)) return "open";
+  if (["open", "?�픈", "?�픈부", "open부"].includes(v)) return "open";
   if (["2", "2부", "2부리그", "division2", "d2", "div2", "2nd"].includes(v)) return "division2";
   return val ?? "";
 };
 
 const normalizeOtherClub = (val?: string) => {
   const v = normalize(val);
-  if (["예", "네", "yes", "y", "true", "1", "on"].includes(v)) return true;
-  if (["아니오", "아니요", "no", "n", "false", "0", "off"].includes(v)) return false;
+  if (["??, "??, "yes", "y", "true", "1", "on"].includes(v)) return true;
+  if (["?�니??, "?�니??, "no", "n", "false", "0", "off"].includes(v)) return false;
   return false;
 };
 
@@ -122,7 +122,7 @@ function computeMatchPoints(record: MatchRecord, rules: PointRules) {
   const typeRules = matchRules[typeKey] || {};
 
   let base = 0;
-  if (typeKey === "국내대회" && leagueKey === "division2") {
+  if (typeKey === "�?��?�?? && leagueKey === "division2") {
     const openBase = typeRules[rankKey] ?? 0;
     base = openBase * 0.3;
   } else {
@@ -233,7 +233,7 @@ export default function ClubRankClient() {
         const db = getDb();
         const seasonResult = await fetchSeason(db);
         if (!seasonResult) {
-          throw new Error("?쒖꽦 ?쒖쫵??李얠쓣 ???놁뒿?덈떎.");
+          throw new Error("??�꽦 ??�쫵??李얠??????�뒿??�떎.");
         }
 
         if (!mounted) return;
@@ -312,7 +312,7 @@ export default function ClubRankClient() {
         setLeaderboard(rows);
       } catch (err) {
         if (!mounted) return;
-        setError(err instanceof Error ? err.message : "?곗씠?곕? 遺덈윭?ㅼ? 紐삵뻽?듬땲??");
+        setError(err instanceof Error ? err.message : "?곗씠?�? ?�덈???? 紐삵�??�땲??");
       } finally {
         if (mounted) setLoading(false);
       }
@@ -333,11 +333,11 @@ export default function ClubRankClient() {
       }
 
       const chartData: ChartRow[] = [
-        { label: "寃쎄린 ?먯젏??, value: selected.matchPointsBase },
-        { label: "?쒕룞 ?먯젏??, value: selected.activityPointsBase },
-        { label: "寃쎄린 議곗젙", value: selected.matchAdjustment },
-        { label: "?쒕룞 議곗젙", value: selected.activityAdjustment },
-        { label: "理쒖쥌 媛??李④컧", value: selected.totalAdjustment },
+        { label: "��� ����", value: selected.matchPointsBase },
+        { label: "Ȱ�� ����", value: selected.activityPointsBase },
+        { label: "��� ����", value: selected.matchAdjustment },
+        { label: "Ȱ�� ����", value: selected.activityAdjustment },
+        { label: "���� ����", value: selected.totalAdjustment },
       ];
 
       chartInstance.current = new Chart(chartRef.current, {
@@ -346,7 +346,7 @@ export default function ClubRankClient() {
           labels: chartData.map((row) => row.label),
           datasets: [
             {
-              label: "?먯닔",
+              label: "����",
               data: chartData.map((row) => row.value),
               backgroundColor: [
                 "rgba(255, 107, 53, 0.5)",
@@ -394,7 +394,7 @@ export default function ClubRankClient() {
     return (
       <section className="section">
         <div className="container">
-          <div className="content-card animate">?곗씠?곕? 遺덈윭?ㅻ뒗 以묒엯?덈떎...</div>
+          <div className="content-card animate">?곗씠?�? ?�덈???�뒗 以묒???�떎...</div>
         </div>
       </section>
     );
@@ -404,13 +404,13 @@ export default function ClubRankClient() {
     return (
       <section className="section">
         <div className="container">
-          <div className="content-card animate">?ㅻ쪟: {error}</div>
+          <div className="content-card animate">??�쪟: {error}</div>
         </div>
       </section>
     );
   }
 
-  const activeSeasonTitle = season?.title || seasonId || "?쒖쫵";
+  const activeSeasonTitle = season?.title || seasonId || "??�쫵";
   const matchWeight = getMatchWeight(season);
   const activityWeight = getActivityWeight(season);
 
@@ -420,10 +420,10 @@ export default function ClubRankClient() {
         <div className="section-header animate">
           <div className="section-badge">IMAO CLUB</div>
           <h1 className="section-title">
-            <span className="text-gradient">?꾩씠留덉삤 ?대읇 ??궧</span>
+            <span className="text-gradient">?꾩씠留덉????�????�?/span>
           </h1>
           <p className="section-description">
-            {activeSeasonTitle} ?쒖쫵 쨌 ?좎닔? 硫ㅻ쾭?ㅼ쓽 ?쒕룞???④퍡 吏耳쒕킄二쇱꽭??          </p>
+            {activeSeasonTitle} ??�쫵 �??좎닔?? 硫ㅻ�??�쓽 ??�룞????�퍡 吏?�쒕?�二?�꽭??          </p>
         </div>
 
         <div className="rank-tabs">
@@ -432,37 +432,37 @@ export default function ClubRankClient() {
             className={`rank-tab ${activeTab === "dashboard" ? "rank-tab--active" : ""}`}
             onClick={() => setActiveTab("dashboard")}
           >
-            ??궧
+            ??�?
           </button>
           <button
             type="button"
             className={`rank-tab ${activeTab === "rules" ? "rank-tab--active" : ""}`}
             onClick={() => setActiveTab("rules")}
           >
-            ?ъ씤??洹쒖젙
+            ?????洹쒖??
           </button>
         </div>
 
         {activeTab === "dashboard" && (
           <div className="rank-grid">
             <aside className="content-card animate">
-              <h2 className="feature-title">吏묎퀎 ?꾪솴</h2>
-              <p className="feature-description">?ㅼ떆媛??곗씠?곗엯?덈떎.</p>
+              <h2 className="feature-title">吏묎???꾪솴</h2>
+              <p className="feature-description">??�떆�??곗씠?곗엯??�떎.</p>
               <ul className="info-list">
-                <li>珥??좎닔: {stats.totalPlayers}</li>
-                <li>珥?寃쎄린: {stats.totalMatches}</li>
-                <li>珥??쒕룞: {stats.totalActivities}</li>
+                <li>???좎닔: {stats.totalPlayers}</li>
+                <li>??寃쎄�? {stats.totalMatches}</li>
+                <li>????�룞: {stats.totalActivities}</li>
               </ul>
             </aside>
 
             <section className="content-card animate">
               <div className="rank-header">
                 <div>
-                  <h2 className="feature-title">?ㅼ떆媛??쒖쐞</h2>
+                  <h2 className="feature-title">??�떆�???�쐞</h2>
                   <p className="feature-description">
-                    ?좎닔 ?대쫫???대┃?섏떆硫??곸꽭?댁뿭??蹂댁떎 ???덉뒿?덈떎.
+                    ?좎닔 ??��????�???�떆�??곸꽭??�뿭??蹂댁??????�뒿??�떎.
                     <br />
-                    ?⑹궛 = 寃쎄린?ъ씤??{Math.round(matchWeight * 100)}%) + ?쒕룞?ъ씤??{Math.round(activityWeight * 100)}%)
+                    ??�궛 = 寃쎄�?????{Math.round(matchWeight * 100)}%) + ??�룞?????{Math.round(activityWeight * 100)}%)
                   </p>
                 </div>
               </div>
@@ -471,15 +471,15 @@ export default function ClubRankClient() {
                 <table className="rank-table">
                   <thead>
                     <tr>
-                      <th>?쒖쐞</th>
-                      <th>?좎닔紐?/th>
-                      <th>珥??띾뱷 ?ъ씤??/th>
+                      <th>??�쐞</th>
+                      <th>?좎닔�?/th>
+                      <th>????�뱷 ?????/th>
                     </tr>
                   </thead>
                   <tbody>
                     {leaderboard.length === 0 && (
                       <tr>
-                        <td colSpan={3}>?쒖쫵 ?곗씠?곌? ?놁뒿?덈떎.</td>
+                        <td colSpan={3}>??�쫵 ?곗씠?�? ??�뒿??�떎.</td>
                       </tr>
                     )}
                     {leaderboard.map((row, idx) => (
@@ -496,9 +496,9 @@ export default function ClubRankClient() {
               {selected && (
                 <div className="rank-chart animate">
                   <h3 className="feature-title">
-                    {selected.playerName} ?ъ씤??援ъ꽦 (理쒖쥌 {selected.totalPoints})
+                    {selected.playerName} ??????�ъ꽦 (理쒖�?{selected.totalPoints})
                   </h3>
-                  <p className="feature-description">留됰?瑜??대┃??鍮꾧탳??蹂댁꽭??</p>
+                  <p className="feature-description">留됰?????�?????��???蹂댁�??</p>
                   <div className="chart-box">
                     <canvas ref={chartRef} />
                   </div>
@@ -510,77 +510,77 @@ export default function ClubRankClient() {
 
         {activeTab === "rules" && (
           <section className="content-card animate">
-            <h2 className="feature-title">?ъ씤??洹쒖젙 (?붿빟)</h2>
+            <h2 className="feature-title">?????洹쒖??(?붿빟)</h2>
             <div className="features-grid">
               <div className="feature-card animate">
-                <h3 className="feature-title">寃쎄린 ?ъ씤??(????깆쟻)</h3>
+                <h3 className="feature-title">寃쎄�??????(?????깆쟻)</h3>
                 <div className="feature-list">
-                  <p><strong>援?젣???/strong></p>
+                  <p><strong>???????/strong></p>
                   <ul className="info-list">
                     <li>- ?곗듅 5??/li>
                     <li>- 以?곗듅 4??/li>
                     <li>- 3??3??/li>
                   </ul>
-                  <p><strong>援?궡???/strong></p>
+                  <p><strong>??�????/strong></p>
                   <ul className="info-list">
-                    <li>?ㅽ뵂遺: 3 / 2 / 1 ??/li>
-                    <li>2遺由ш렇: ?ㅽ뵂遺 寃쎄린?ъ씤?몄쓽 30%</li>
+                    <li>??�뵂?�: 3 / 2 / 1 ??/li>
+                    <li>2?�?�ш렇: ??�뵂?� 寃쎄�????몄쓽 30%</li>
                   </ul>
                   <p className="feature-description">
-                    * 援?젣/援?궡 紐⑤뱺 ????곸슜 : 蹂듭떇議?李몄뿬??? 硫ㅻ쾭? ????대쨪 李멸????깆쟻??寃쎌슦 30%留??몄젙
+                    * ??????�?紐⑤�??????곸슜 : 蹂듭?��??李몄�???? 硫ㅻ�?? ??????��?李멸????깆쟻??寃쎌??30%�??몄젙
                     <br />
-                    (?좎쓽 ?깆떎 洹쒖젙???섍굅 ?꾩씠留덉삤 ??댄?[蹂듭옣/?⑷뎄]濡?李멸???寃쎌슦???쒗븿)
+                    (?좎쓽 ?깆떎 洹쒖?????�굅 ?꾩씠留덉???????[蹂듭????�뎄]�?李멸???寃쎌?????�븿)
                   </p>
                 </div>
                 <div className="highlight-box">
-                  <h4 className="benefit-title">理쒖쥌 ?쒖쐞 寃곗젙</h4>
+                  <h4 className="benefit-title">理쒖�???�쐞 寃곗??/h4>
                   <ul className="benefit-list">
-                    <li><strong>留ㅻ뀈 11??留?湲곗?, 珥??띾뱷 ?ъ씤??/strong></li>
-                    <li>?숈젏??泥섎━</li>
-                    <li>1?쒖쐞: ?뱀옄???곷??꾩쟻)</li>
-                    <li>2?쒖쐞: 珥??앹떎李?/li>
-                    <li>3?쒖쐞: 珥??앹젏</li>
-                    <li>4?쒖쐞: 理쒖냼 ?ㅼ젏 (?꾩슂 ????대툕?덉씠??留ㅼ튂)</li>
-                    <li>吏???숈젏 ????대툕?덉씠??留ㅼ튂 吏꾪뻾</li>
+                    <li><strong>留ㅻ??11??�?湲곗?, ????�뱷 ?????/strong></li>
+                    <li>??�젏??泥섎??/li>
+                    <li>1??�쐞: ?뱀????�??꾩쟻)</li>
+                    <li>2??�쐞: ????�떎�?/li>
+                    <li>3??�쐞: ????�젏</li>
+                    <li>4??�쐞: 理쒖????�젏 (?꾩슂 ??????�???�씠??留ㅼ??</li>
+                    <li>吏????�젏 ??????�???�씠??留ㅼ??吏꾪�?/li>
                   </ul>
                   <p className="feature-description">
-                    * 理쒖쥌 ?좎닔 ?좊컻<br />
-                    ?먮룞 ?좊컻: ?㉱룸? 媛곴컖 ?곸쐞 5紐?/ 李⑥닚??1紐낆? ?덈퉬 ?꾨낫(?꾩썝???됯?)
+                    * 理쒖�??좎닔 ?좊컻<br />
+                    ?�?�� ?좊컻: ??�룸? 媛곴�??곸쐞 5�?/ 李⑥???1紐낆? ??�퉬 ?꾨낫(?꾩썝?????)
                   </p>
                 </div>
               </div>
 
               <div className="feature-card animate">
-                <h3 className="feature-title">?쒕룞 ?ъ씤??(李몄뿬/?댁쁺/遊됱궗)</h3>
+                <h3 className="feature-title">??�룞 ?????(李몄�???�쁺/?�됱�?</h3>
                 <div className="feature-list">
-                  <p><strong>湲곕낯 ?쒕룞</strong></p>
+                  <p><strong>湲곕????�룞</strong></p>
                   <ul className="info-list">
-                    <li>?뺢린紐⑥엫/?덈젴 1??(吏媛?議고눜 0.5??</li>
+                    <li>?�?��紐⑥????�젴 1??(吏�?議고??0.5??</li>
                   </ul>
-                  <p><strong>湲곗뿬 ?쒕룞</strong></p>
+                  <p><strong>湲곗�???�룞</strong></p>
                   <ul className="info-list">
-                    <li>?대읇 ?대? ???2??쨌 ?몃? 援먮쪟?????3??/li>
-                    <li>????됱궗 ?ㅽ깭??4??쨌 ?됱궗 ?⑥닚李몄뿬 2??/li>
+                    <li>??�????�? ????2??�??�? ?�먮�??????3??/li>
+                    <li>??????�궗 ??�깭??4??�???�궗 ??�닚李몄�?2??/li>
                   </ul>
-                  <p><strong>?뚯떊 ?쒕룞</strong></p>
+                  <p><strong>???�� ??�룞</strong></p>
                   <ul className="info-list">
-                    <li>?좎엯 ?뚯썝 援먯쑁/硫섑넗留?3??쨌 ?λ퉬/肄뷀듃 ?뺣━ 2??/li>
-                    <li>?띾낫 李몄뿬 2.5??쨌 ?댁쁺吏??쒕룞 ??5??/li>
+                    <li>?좎엯 ???�� ?�먯??硫섑?�留?3??�??λ???��????뺣━ 2??/li>
+                    <li>??�낫 李몄�?2.5??�???�쁺�???�룞 ??5??/li>
                   </ul>
-                  <p><strong>?밸퀎 ?ъ씤??/strong></p>
+                  <p><strong>?밸�??????/strong></p>
                   <ul className="info-list">
-                    <li>?좉퇋 ?뚯썝 異붿쿇쨌媛??5??/li>
-                    <li>?대읇 二쇨? ????낆긽 3/2/1??/li>
-                    <li>?몃?????대읇 ????낆긽: ?ъ씤??2諛?/li>
-                    <li>?대떖??MVP 5??/li>
+                    <li>?좉퇋 ???�� ?�붿쿇쨌媛??5??/li>
+                    <li>??�??二쇨? ??????�긽 3/2/1??/li>
+                    <li>?�???????�????????�긽: ?????2�?/li>
+                    <li>??�???MVP 5??/li>
                   </ul>
-                  <p><strong>李④컧</strong></p>
+                  <p><strong>李④�?/strong></p>
                   <ul className="info-list">
-                    <li>臾대떒 遺덉갭 3??-2?? 鍮꾨ℓ??-3?? 湲곕Ъ?뚯넀 -5????/li>
+                    <li>?��????�덉�?3??-2?? ??��???-3?? 湲곕Ъ???? -5????/li>
                   </ul>
                 </div>
                 <p className="feature-description">
-                  ?꾩쟻 ?ъ씤?몃뒗 ?곕쭚 ?뺤궛 諛??깃툒/?쒗깮(怨⑤뱶쨌?ㅻ쾭쨌釉뚮줎利? 遺?ъ뿉 ?쒖슜
+                  ?꾩쟻 ????몃뒗 ?곕쭚 ?뺤궛 �??깃툒/??�깮(?�⑤뱶쨌??�쾭쨌釉??���? ?�??�???�슜
                 </p>
               </div>
             </div>
@@ -591,7 +591,7 @@ export default function ClubRankClient() {
                 target="_blank"
                 rel="noreferrer"
               >
-                洹쒖젙 ?먯꽭??蹂닿린
+                洹쒖???�?��??蹂닿�?
               </a>
             </p>
           </section>
@@ -600,4 +600,7 @@ export default function ClubRankClient() {
     </section>
   );
 }
+
+
+
 
